@@ -1,0 +1,19 @@
+{
+  "name": "web-crawler-http",
+  "version": "1.0.0",
+  "description": "A Webcrawler project based on nodejs.",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reaper2171/web-crawler-http.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
