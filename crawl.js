@@ -1,5 +1,27 @@
 const {JSDOM} = require('jsdom');
 
+//function to crawl a single webpage
+async function crawlPage(currentUrl){
+    console.log(`Currently crawling ${currentUrl} url`);  //Message for notifying the control flow
+    try{
+        const resp = await fetch(currentUrl);             //fetching response object
+        
+        if(resp.status >399){                   //for handling error status codes
+            console.log(`error in fetch status code: ${resp.status} on page ${currentUrl}`);
+            return;
+        }
+        //for handling non-html pages
+        if(!resp.headers.get("content-type").includes("text/html")){       //used includes and not !== bacuse content-type may have sonme other content-types like charset
+            console.log(`Non-html content-type: ${resp.headers.get("content-type")} on page ${currentUrl}`);
+            return;
+        }   
+
+        console.log(await resp.text());         //converts the response object which container info about response(like code,headers,etc) to text
+    }catch(err){                                //for handling errors in url
+        console.log(`error in fetch: ${err.message}, on page ${currentUrl}`);
+    }                           
+}
+
 function getUrlsFromHttp(htmlBody, baseUrl){
     const urls = [];
     const dom = new JSDOM(htmlBody);                  //JSDOM - function in jsdom to store the html body a dom object in memory
@@ -26,5 +48,6 @@ function normalizeUrl(urlString){
 
 module.exports = {          //code for exporting the functions defined above in other files
     normalizeUrl,
-    getUrlsFromHttp
+    getUrlsFromHttp,
+    crawlPage
 }
